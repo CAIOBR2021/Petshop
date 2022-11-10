@@ -16,14 +16,14 @@ import com.caio.petshop.domain.enums.SituacaoPagamento;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pagamento implements Serializable {
+public abstract class Pagamento implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private Integer id;
 	private Double valor;
-	private SituacaoPagamento situacao;
+	private Integer situacao;
 	
 	@OneToOne
 	@JoinColumn(name = "id_servico")
@@ -39,7 +39,7 @@ public class Pagamento implements Serializable {
 		super();
 		this.id = id;
 		this.valor = valor;
-		this.situacao = situacao;
+		this.situacao = situacao.getCod();
 		this.setServico(servico);
 	}
 
@@ -77,11 +77,11 @@ public class Pagamento implements Serializable {
 	}
 
 	public SituacaoPagamento getSituacao() {
-		return situacao;
+		return SituacaoPagamento.toEnum(situacao);
 	}
 
 	public void setSituacao(SituacaoPagamento situacao) {
-		this.situacao = situacao;
+		this.situacao = situacao.getCod();
 	}
 
 	public Servico getServico() {
