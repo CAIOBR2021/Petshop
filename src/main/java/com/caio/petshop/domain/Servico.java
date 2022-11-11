@@ -17,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Servico implements Serializable {
 	
@@ -40,6 +42,7 @@ public class Servico implements Serializable {
 	@JoinColumn(name = "id_funcionario")
 	private Funcionario funcionario;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "id_pet")
 	private Pet pet;
