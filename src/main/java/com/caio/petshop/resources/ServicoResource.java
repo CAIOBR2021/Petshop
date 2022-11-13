@@ -1,6 +1,8 @@
 package com.caio.petshop.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.caio.petshop.domain.Pessoa;
 import com.caio.petshop.domain.Servico;
+import com.caio.petshop.dto.ServicoDTO;
 import com.caio.petshop.service.ServicoService;
 
 @RestController
@@ -56,7 +60,13 @@ public class ServicoResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<ServicoDTO>> findAll() {
+		
+		List<Servico> list = service.findAll();
+		List<ServicoDTO> listDto = list.stream().map(obj -> new ServicoDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
 	
-	
-	
+
 }
